@@ -1,4 +1,4 @@
-package com.example.demo.domain.model;
+package com.pragma.powerup.foodcourtmicroservice.domain.model;
 
 public class Dish {
 

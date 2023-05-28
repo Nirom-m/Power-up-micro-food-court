@@ -1,4 +1,4 @@
-package com.example.demo.adapters.driving.http.dto.response;
+package com.pragma.powerup.foodcourtmicroservice.adapters.driving.http.dto.response;
 
 public class RestaurantResponseDto {
 }

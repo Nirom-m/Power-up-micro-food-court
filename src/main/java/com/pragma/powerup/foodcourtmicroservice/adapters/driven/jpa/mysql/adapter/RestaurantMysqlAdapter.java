@@ -1,4 +1,20 @@
-package com.example.demo.adapters.driven.jpa.mysql.adapter;
+package com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.adapter;
 
-public class RestaurantMysqlAdapter {
+import com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.mappers.IRestaurantEntityMapper;
+import com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
+import com.pragma.powerup.foodcourtmicroservice.domain.model.Restaurant;
+import com.pragma.powerup.foodcourtmicroservice.domain.spi.IRestaurantPersistencePort;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@RequiredArgsConstructor
+public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
+
+    private final IRestaurantEntityMapper restaurantEntityMapper;
+    private final IRestaurantRepository restaurantRepository;
+
+    @Override
+    public void saveRestaurant(Restaurant restaurant) {
+        restaurantRepository.save(restaurantEntityMapper.toEntity(restaurant));
+    }
 }

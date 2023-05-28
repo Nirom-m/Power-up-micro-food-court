@@ -1,4 +1,4 @@
-package com.example.demo.domain.datasource;
+package com.pragma.powerup.foodcourtmicroservice.domain.datasource;
 
 public interface IUserClientPort {
 

@@ -1,9 +1,11 @@
-package com.example.demo;
+package com.pragma.powerup.foodcourtmicroservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
+@EnableFeignClients
 public class FoodCourtMicroserviceApplication {
 
 	public static void main(String[] args) {

@@ -1,44 +1,38 @@
-package com.example.demo.configuration;
+package com.pragma.powerup.foodcourtmicroservice.configuration;
 
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.RoleMysqlAdapter;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.UserMysqlAdapter;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IRoleEntityMapper;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IUserEntityMapper;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IRoleRepository;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IUserRepository;
-import com.pragma.powerup.usermicroservice.domain.api.IRoleServicePort;
-import com.pragma.powerup.usermicroservice.domain.api.IUserServicePort;
-import com.pragma.powerup.usermicroservice.domain.spi.IRolePersistencePort;
-import com.pragma.powerup.usermicroservice.domain.spi.IUserPersistencePort;
-import com.pragma.powerup.usermicroservice.domain.usecase.RoleUseCase;
-import com.pragma.powerup.usermicroservice.domain.usecase.UserUseCase;
+import com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.adapter.RestaurantMysqlAdapter;
+import com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.adapter.UserClientAdapter;
+import com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.mappers.IRestaurantEntityMapper;
+import com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
+import com.pragma.powerup.foodcourtmicroservice.adapters.driven.jpa.mysql.restClient.IUserClient;
+import com.pragma.powerup.foodcourtmicroservice.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.foodcourtmicroservice.domain.datasource.IUserClientPort;
+import com.pragma.powerup.foodcourtmicroservice.domain.spi.IRestaurantPersistencePort;
+import com.pragma.powerup.foodcourtmicroservice.domain.usercase.RestaurantUserCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
 public class BeanConfiguration {
-    private final IRoleRepository roleRepository;
-    private final IUserRepository userRepository;
-    private final IRoleEntityMapper roleEntityMapper;
-    private final IUserEntityMapper userEntityMapper;
-    private final PasswordEncoder passwordEncoder;
+
+    private final IRestaurantEntityMapper restaurantEntityMapper;
+    private final IRestaurantRepository restaurantRepository;
+    private final IUserClient userClient;
+
     @Bean
-    public IRoleServicePort roleServicePort() {
-        return new RoleUseCase(rolePersistencePort());
+    public IRestaurantPersistencePort restaurantPersistencePort(){
+        return new RestaurantMysqlAdapter(restaurantEntityMapper, restaurantRepository);
     }
     @Bean
-    public IRolePersistencePort rolePersistencePort() {
-        return new RoleMysqlAdapter(roleRepository, roleEntityMapper);
+    public IUserClientPort userClientPort(){
+        return new UserClientAdapter(userClient);
     }
+
     @Bean
-    public IUserServicePort userServicePort() {
-        return new UserUseCase(userPersistencePort());
+    public IRestaurantServicePort restaurantServicePort(){
+        return new RestaurantUserCase(restaurantPersistencePort(), userClientPort());
     }
-    @Bean
-    public IUserPersistencePort userPersistencePort() {
-        return new UserMysqlAdapter(userRepository, userEntityMapper, passwordEncoder);
-    }
+
 }

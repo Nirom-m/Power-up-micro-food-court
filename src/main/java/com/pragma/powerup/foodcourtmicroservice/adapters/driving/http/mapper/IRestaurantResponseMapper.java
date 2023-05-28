@@ -1,4 +1,4 @@
-package com.example.demo.adapters.driving.http.mapper;
+package com.pragma.powerup.foodcourtmicroservice.adapters.driving.http.mapper;
 
 public interface IRestaurantResponseMapper {
 }

@@ -1,4 +1,4 @@
-package com.example.demo.configuration;
+package com.pragma.powerup.foodcourtmicroservice.configuration;
 
 public class Constants {
 
